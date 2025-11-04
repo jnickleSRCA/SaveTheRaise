@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: savetheraise-db
+    environment:
+      POSTGRES_DB: savetheraise
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "15462:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: savetheraise-api
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/savetheraise
+      PORT: 3001
+      HOST: 0.0.0.0
+      CORS_ORIGIN: http://ubuntu02:15460
+      NODE_ENV: production
+      COOKIE_SECRET: ${COOKIE_SECRET:-savetheraise-secret-change-in-production}
+    ports:
+      - "15461:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: savetheraise-web
+    environment:
+      NEXT_PUBLIC_API_URL: http://ubuntu02:15461
+    ports:
+      - "15460:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

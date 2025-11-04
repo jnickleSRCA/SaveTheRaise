@@ -1,0 +1,53 @@
+FROM node:20-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json* ./
+COPY packages/web/package.json ./packages/web/
+COPY packages/shared/package.json ./packages/shared/
+
+# Install dependencies
+RUN npm ci
+
+# Build the shared package and web app
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Build shared package first
+WORKDIR /app/packages/shared
+RUN npm run build
+
+# Build Next.js app
+WORKDIR /app/packages/web
+RUN npm run build
+
+# Production image
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy built files
+COPY --from=builder /app/packages/web/.next ./packages/web/.next
+COPY --from=builder /app/packages/web/public ./packages/web/public
+COPY --from=builder /app/packages/web/package.json ./packages/web/
+COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
+COPY --from=builder /app/packages/shared/package.json ./packages/shared/
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+
+CMD ["sh", "-c", "cd packages/web && npm start"]
