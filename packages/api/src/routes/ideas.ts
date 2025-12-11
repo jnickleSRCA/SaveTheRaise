@@ -1,12 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import type { Kysely } from 'kysely';
 import type { Database, IdeaId, NewIdea, IdeaUpdate } from '@savetheraise/shared';
-import {
-  createIdea,
-  getIdeasByStatus,
-  updateIdea,
-  getIdeaById,
-} from '../services/ideas';
+import { createIdea, getIdeasByStatus, updateIdea, getIdeaById } from '../services/ideas';
 import { createAuthMiddleware } from '../middleware/auth';
 
 export async function ideasRoutes(fastify: FastifyInstance, db: Kysely<Database>) {
@@ -44,14 +39,19 @@ export async function ideasRoutes(fastify: FastifyInstance, db: Kysely<Database>
   );
 
   /**
-   * Get ideas for committee review (status: committee_review)
+   * Get all ideas for committee review (all statuses except submitted and rejected_initial)
    */
   fastify.get(
     '/ideas/committee-review',
     { preHandler: committeeAuthMiddleware },
     async (request, reply) => {
       try {
-        const ideas = await getIdeasByStatus(db, 'committee_review');
+        const ideas = await getIdeasByStatus(db, [
+          'committee_review',
+          'approved',
+          'implemented',
+          'rejected_committee',
+        ]);
         return reply.send(ideas);
       } catch (error) {
         request.log.error(error);

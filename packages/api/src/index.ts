@@ -21,8 +21,11 @@ async function start() {
   });
 
   // Register plugins
+  const corsOrigins = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
+    : ['http://localhost:3000'];
   await fastify.register(cors, {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    origin: corsOrigins,
     credentials: true,
   });
 

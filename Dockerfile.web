@@ -24,6 +24,8 @@ RUN npm run build
 
 # Build Next.js app
 WORKDIR /app/packages/web
+ARG NEXT_PUBLIC_API_URL=http://ubuntu02:15461
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN npm run build
 
 # Production image
