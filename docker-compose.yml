@@ -41,9 +41,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.web
+      args:
+        NEXT_PUBLIC_API_URL: /api
     container_name: savetheraise-web
     environment:
-      NEXT_PUBLIC_API_URL: http://ubuntu02:15461
+      NEXT_PUBLIC_API_URL: /api
     ports:
       - "15460:3000"
     depends_on:

@@ -22,7 +22,7 @@ export async function authRoutes(fastify: FastifyInstance) {
       path: '/',
       httpOnly: true,
       secure: false,
-      sameSite: 'none',
+      sameSite: 'lax',
       maxAge: 60 * 60 * 24, // 24 hours
     });
 

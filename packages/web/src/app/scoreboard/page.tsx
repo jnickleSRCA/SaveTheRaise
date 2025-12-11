@@ -34,7 +34,14 @@ export default function Scoreboard() {
     return (
       <>
         <ReviewNav />
-        <div style={{ padding: '40px', textAlign: 'center', fontSize: '1.2em', color: '#006994' }}>
+        <div
+          style={{
+            padding: '40px',
+            textAlign: 'center',
+            fontSize: '1.2em',
+            color: '#006994',
+          }}
+        >
           🌊 Loading...
         </div>
       </>
@@ -84,7 +91,14 @@ export default function Scoreboard() {
         >
           🏖️ Catching Some Raise Scoreboard
         </h1>
-        <p style={{ textAlign: 'center', color: '#555', marginBottom: '40px', fontSize: '1.1em' }}>
+        <p
+          style={{
+            textAlign: 'center',
+            color: '#555',
+            marginBottom: '40px',
+            fontSize: '1.1em',
+          }}
+        >
           Track the impact of our cost-saving initiatives
         </p>
 
@@ -105,7 +119,14 @@ export default function Scoreboard() {
               border: '3px solid #87CEEB',
             }}
           >
-            <div style={{ fontSize: '16px', color: '#006994', marginBottom: '15px', fontWeight: '600' }}>
+            <div
+              style={{
+                fontSize: '16px',
+                color: '#006994',
+                marginBottom: '15px',
+                fontWeight: '600',
+              }}
+            >
               🌊 Total Ideas Submitted
             </div>
             <div style={{ fontSize: '56px', fontWeight: 'bold', color: '#006994' }}>
@@ -123,7 +144,14 @@ export default function Scoreboard() {
               border: '3px solid #90EE90',
             }}
           >
-            <div style={{ fontSize: '16px', color: '#28a745', marginBottom: '15px', fontWeight: '600' }}>
+            <div
+              style={{
+                fontSize: '16px',
+                color: '#28a745',
+                marginBottom: '15px',
+                fontWeight: '600',
+              }}
+            >
               ✅ Dollar Value Approved
             </div>
             <div style={{ fontSize: '56px', fontWeight: 'bold', color: '#28a745' }}>
@@ -145,7 +173,14 @@ export default function Scoreboard() {
               border: '3px solid #FFD700',
             }}
           >
-            <div style={{ fontSize: '16px', color: '#FF8C00', marginBottom: '15px', fontWeight: '600' }}>
+            <div
+              style={{
+                fontSize: '16px',
+                color: '#FF8C00',
+                marginBottom: '15px',
+                fontWeight: '600',
+              }}
+            >
               🏆 Dollar Value Implemented
             </div>
             <div style={{ fontSize: '56px', fontWeight: 'bold', color: '#FF8C00' }}>
