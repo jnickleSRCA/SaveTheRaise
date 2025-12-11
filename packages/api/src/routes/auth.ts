@@ -21,8 +21,8 @@ export async function authRoutes(fastify: FastifyInstance) {
     reply.setCookie(`auth_${role}`, 'authenticated', {
       path: '/',
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: false,
+      sameSite: 'none',
       maxAge: 60 * 60 * 24, // 24 hours
     });
 
