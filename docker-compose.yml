@@ -27,7 +27,7 @@ services:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/savetheraise
       PORT: 3001
       HOST: 0.0.0.0
-      CORS_ORIGIN: http://ubuntu02:15460,http://localhost:15460
+      CORS_ORIGIN: http://ubuntu02:15460,http://localhost:15460,http://catchsomeraise.srcautomotive.local
       NODE_ENV: production
       COOKIE_SECRET: ${COOKIE_SECRET:-savetheraise-secret-change-in-production}
     ports:
